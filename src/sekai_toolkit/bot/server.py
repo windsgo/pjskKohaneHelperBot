@@ -9,7 +9,8 @@ from sekai_toolkit.bot.group_settings import GroupSettings
 from aiohttp import web,ClientSession,ClientTimeout,WSMsgType
 PATTERN=re.compile(r'^\[\d+\]\s*response_mkcn',re.I)
 LOG=logging.getLogger('sekai-bot')
-GROUP_DECODE_OWNER='1245784195'
+BOT_OWNER='1245784195'
+GROUP_DECODE_OWNER=BOT_OWNER
 COMMAND_PREFIXES=('/', '\\')
 COMMAND_ALIASES={
  'help':'help','帮助':'help','-help':'help',
@@ -17,6 +18,7 @@ COMMAND_ALIASES={
  'group_decode':'group_decode','烤森群抓包解析':'group_decode','群聊烤森解码':'group_decode',
  'reply':'reply','烤森解析回复模式':'reply','烤森回复':'reply','sekai_reply':'reply',
  'recall':'recall','自动撤回用户烤森抓包消息':'recall','自动撤回烤森抓包':'recall',
+ 'heartbeat':'heartbeat','定时在线报告':'heartbeat','在线报告':'heartbeat',
  'stamina':'stamina','火':'stamina',
  'converter':'converter','转换器':'converter',
 }
@@ -42,7 +44,7 @@ def help_requested(value):
 def command_help_footer():
  return '提示：指令可以带 /、\\ 或不带前缀；群聊里 @机器人 也可以触发。'
 
-def help_text(mode,auto_recall=True,group_decode=True):
+def help_text(mode,auto_recall=True,group_decode=True,heartbeat=True):
  mode_text='私聊上传者' if mode=='private' else '群组'
  return ('【烤森工具箱帮助】\n'
          '地图报告：在群里上传名称以 [数字] response_mkcn 开头的 MySekai 文件，自动返回总览和四张地图。\n'
@@ -59,16 +61,19 @@ def help_text(mode,auto_recall=True,group_decode=True):
          '4. 本群自动撤回抓包消息\n'
          f'  自动撤回用户烤森抓包消息 开启/关闭/查询（当前：{"开启" if auto_recall else "关闭"}）\n'
          '  示例：自动撤回用户烤森抓包消息 关闭\n\n'
-         '5. 体力提醒\n'
+         '5. 全局定时在线报告（仅指定管理 QQ 可修改）\n'
+         f'  定时在线报告 开启/关闭/查询（当前：{"开启" if heartbeat else "关闭"}）\n'
+         '  示例：定时在线报告 查询\n\n'
+         '6. 体力提醒\n'
          '  火 最大值 50\n'
          '  火 记录 -cur 23 -min 12\n'
          '  火 查询\n'
          '  火 help\n\n'
-         '6. 转换器计时\n'
+         '7. 转换器计时\n'
          '  转换器 -time 22\n'
          '  转换器 查询\n'
          '  转换器 help\n\n'
-         '7. 帮助\n'
+         '8. 帮助\n'
          '  help\n'
          '  /help\n'
          '  各指令后加 help 或 -help 查看单独帮助。\n\n'
@@ -117,6 +122,13 @@ def group_decode_help_text():
          '  烤森群抓包解析 开启|关闭|查询\n'
          '  只有指定管理 QQ 可以修改全局开关；所有人可查询。\n'
          '  关闭后不再接收群聊抓包文件，已排队但尚未开始的任务会跳过。\n\n'
+         +command_help_footer())
+
+def heartbeat_help_text(enabled=True):
+ return ('【定时在线报告帮助】\n'
+         f'  定时在线报告 开启|关闭|查询（当前：{"开启" if enabled else "关闭"}）\n'
+         '  只有指定管理 QQ 可以修改全局开关；所有人可查询。\n'
+         '  关闭后不再向上报群发送定期在线报告，Bot 仍保持连接。\n\n'
          +command_help_footer())
 
 def reply_help_text(mode='group'):
@@ -292,6 +304,10 @@ class Connection:
  async def heartbeat_reports(self):
   while True:
    await asyncio.sleep(self.config.heartbeat_minutes*60)
+   settings=getattr(self.config,'group_settings',None)
+   if settings is not None and not settings.heartbeat_enabled():
+    LOG.debug('定时在线报告已关闭，本轮跳过')
+    continue
    await self.heartbeat_once()
  async def send_status(self,event):
   name=self.protocol_label()
@@ -601,9 +617,11 @@ class Connection:
         text=status_help_text()
        elif target in ('群抓包解析','group_decode'):
         text=group_decode_help_text()
+       elif target in ('定时在线报告','在线报告','heartbeat'):
+        text=heartbeat_help_text(self.config.group_settings.heartbeat_enabled())
        else:
         reply_mode,auto_recall=self.group_preferences(event)
-        text=help_text(reply_mode,auto_recall,self.config.group_settings.group_decode_enabled())
+        text=help_text(reply_mode,auto_recall,self.config.group_settings.group_decode_enabled(),self.config.group_settings.heartbeat_enabled())
        LOG.info('发送使用帮助 | 群=%s | 请求者=%s',event.get('group_id','—'),event.get('user_id','—'))
        asyncio.create_task(self.send(event,text))
        continue
@@ -625,7 +643,7 @@ class Connection:
         asyncio.create_task(self.send(event,answer))
        elif value is None:
         asyncio.create_task(self.send(event,'参数错误：烤森群抓包解析只接受 开启/关闭/查询。\n\n'+group_decode_help_text()))
-       elif str(event.get('user_id'))!=GROUP_DECODE_OWNER:
+       elif str(event.get('user_id'))!=BOT_OWNER:
         LOG.warning('拒绝修改全局群聊解码 | QQ=%s',event.get('user_id'))
         asyncio.create_task(self.send(event,'只有指定管理 QQ 可以修改全局烤森群抓包解析设置。'))
        else:
@@ -670,6 +688,24 @@ class Connection:
         LOG.info('本群抓包消息自动撤回=%s | 操作者=%s | 群=%s',value,event.get('user_id'),event.get('group_id','—'))
         asyncio.create_task(self.send(event,'本群自动撤回用户烤森抓包消息已'+('开启。' if value else '关闭。')))
        continue
+      if name=='heartbeat':
+       if not arg or help_requested(arg):
+        asyncio.create_task(self.send(event,heartbeat_help_text(self.config.group_settings.heartbeat_enabled())))
+        continue
+       value=parse_toggle(arg)
+       if value=='query':
+        answer='全局定时在线报告：'+('开启' if self.config.group_settings.heartbeat_enabled() else '关闭')+'。'
+        asyncio.create_task(self.send(event,answer))
+       elif value is None:
+        asyncio.create_task(self.send(event,'参数错误：定时在线报告只接受 开启/关闭/查询。\n\n'+heartbeat_help_text(self.config.group_settings.heartbeat_enabled())))
+       elif str(event.get('user_id'))!=BOT_OWNER:
+        LOG.warning('拒绝修改全局定时在线报告 | QQ=%s',event.get('user_id'))
+        asyncio.create_task(self.send(event,'只有指定管理 QQ 可以修改全局定时在线报告设置。'))
+       else:
+        self.config.group_settings.set_heartbeat_enabled(value)
+        LOG.info('全局定时在线报告=%s | 操作者=%s',value,event.get('user_id'))
+        asyncio.create_task(self.send(event,'全局定时在线报告已'+('开启。' if value else '关闭。')))
+       continue
       if name=='stamina':
        if not arg or help_requested(arg):
         asyncio.create_task(self.send(event,stamina_help_text()))
@@ -709,7 +745,7 @@ class Connection:
         asyncio.create_task(self.send(event,answer))
        continue
      if explicit:
-      asyncio.create_task(self.send(event,'未知指令：'+command_text+'\n\n'+help_text(*self.group_preferences(event),self.config.group_settings.group_decode_enabled())))
+      asyncio.create_task(self.send(event,'未知指令：'+command_text+'\n\n'+help_text(*self.group_preferences(event),self.config.group_settings.group_decode_enabled(),self.config.group_settings.heartbeat_enabled())))
     for file in attachments(event):
      if not isinstance(file,dict):continue
      file=dict(file)

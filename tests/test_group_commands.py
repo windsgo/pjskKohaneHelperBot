@@ -41,8 +41,15 @@ async def main():
                     assert not cfg.group_settings.group_decode_enabled()
                     assert not GroupSettings(cfg.group_settings.path).group_decode_enabled()
                     assert '关闭' in str(await issue(200,'烤森群抓包解析 查询'))
+                    assert '只有指定管理 QQ' in str(await issue(100,'定时在线报告 关闭'))
+                    assert cfg.group_settings.heartbeat_enabled()
+                    assert '已关闭' in str(await issue(100,'定时在线报告 关闭',1245784195))
+                    assert not cfg.group_settings.heartbeat_enabled()
+                    assert not GroupSettings(cfg.group_settings.path).heartbeat_enabled()
+                    assert '关闭' in str(await issue(200,'定时在线报告 查询'))
                     help_body=str(await issue(200,'help'))
-                    assert '全局烤森群抓包解析' in help_body and '本群烤森解析回复模式' in help_body
+                    assert '全局烤森群抓包解析' in help_body and '本群烤森解析回复模式' in help_body and '全局定时在线报告' in help_body
+                    assert '已开启' in str(await issue(100,'定时在线报告 开启',1245784195))
                     # @bot also triggers a bare command.
                     assert '上限' in str(await issue(200,'火 查询',at=True))
                     await ws.send_json({'post_type':'notice','notice_type':'group_upload','group_id':200,'user_id':9,'self_id':7,'file':{'id':'abc','name':'[428] response_mkcn_test.bin'}})

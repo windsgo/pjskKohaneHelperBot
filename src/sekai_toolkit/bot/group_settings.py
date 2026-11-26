@@ -44,3 +44,12 @@ class GroupSettings:
     def set_group_decode(self,enabled):
         with self._db() as db:
             db.execute('INSERT INTO global_settings(key,value) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET value=excluded.value',('group_decode','1' if enabled else '0'))
+
+    def heartbeat_enabled(self):
+        with self._db() as db:
+            row=db.execute('SELECT value FROM global_settings WHERE key=?',('heartbeat_enabled',)).fetchone()
+        return row is None or row[0]=='1'
+
+    def set_heartbeat_enabled(self,enabled):
+        with self._db() as db:
+            db.execute('INSERT INTO global_settings(key,value) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET value=excluded.value',('heartbeat_enabled','1' if enabled else '0'))
