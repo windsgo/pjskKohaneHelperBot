@@ -1,0 +1,370 @@
+[
+  {
+    "path": "icon/Texture2D/item_blank_blueprint.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_blueprint_fragment.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_junk_1.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_junk_10.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_junk_11.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_junk_12.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_junk_13.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_junk_14.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_junk_15.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_junk_16.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_junk_17.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_junk_2.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_junk_3.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_junk_4.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_junk_5.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_junk_6.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_junk_7.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_junk_8.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_junk_9.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_mineral_1.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_mineral_10.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_mineral_2.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_mineral_3.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_mineral_4.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_mineral_5.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_mineral_6.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_mineral_7.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_mineral_8.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_mineral_9.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_photofilm.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_plant_1.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_plant_2.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_plant_3.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_plant_4.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_surplus_blueprint.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_surplus_music_record.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_tone_8.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_wood_1.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_wood_2.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_wood_3.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_wood_4.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/item_wood_5.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/material174.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/material175.png",
+    "status": "downloaded"
+  },
+  {
+    "path": "icon/Texture2D/material176.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/material177.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/material178.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/material179.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/material180.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/material181.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/material182.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/material183.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/material184.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/material185.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/material186.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/material187.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/material188.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/material189.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/material190.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/material191.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/material192.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/material193.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/material194.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/material195.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/material196.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/material197.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/material198.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/material199.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/material201.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/mdl_non1001_before_sapling1_118.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/mdl_non1001_before_sapling1_119.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/mdl_non1001_before_sapling1_120.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/mdl_non1001_before_sapling1_121.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/mdl_non1001_before_sprout1_126.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/mdl_non1001_before_sprout1_127.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/mdl_non1001_before_sprout1_128.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/mdl_non1001_before_sprout1_129.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/mdl_non1001_before_sprout1_130.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/mdl_non1001_before_sprout1_474.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/mdl_non1001_before_sprout1_475.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/mdl_non1001_before_sprout1_476.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/mdl_non1001_before_sprout1_477.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/mdl_non1001_before_sprout1_478.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/mdl_non1001_before_sprout1_479.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/mdl_non1001_before_sprout1_480.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/mdl_non1001_before_sprout1_481.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/mdl_non1001_before_sprout1_482.png",
+    "status": "cached"
+  },
+  {
+    "path": "icon/Texture2D/mdl_non1001_before_sprout1_483.png",
+    "status": "cached"
+  },
+  {
+    "path": "img/beach.png",
+    "status": "cached"
+  },
+  {
+    "path": "img/flowergarden.png",
+    "status": "cached"
+  },
+  {
+    "path": "img/grassland.png",
+    "status": "cached"
+  },
+  {
+    "path": "img/memorialplace.png",
+    "status": "cached"
+  }
+]

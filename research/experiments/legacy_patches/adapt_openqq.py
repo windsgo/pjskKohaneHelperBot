@@ -1,0 +1,10 @@
+from pathlib import Path
+p=Path('qqbot_server.py');s=p.read_text(encoding='utf-8')
+s=s.replace("  attempts=[]\n  if event.get('group_id'):","  attempts=[]\n  if getattr(self.config,'adapter','onebot')=='openqq':\n   key=str(file.get('name') or file.get('file_name') or fid)\n   attempts.append(('get_file',{'file':key,'file_id':key}))\n  if event.get('group_id'):")
+s=s.replace("    candidate_url=candidate.get('url') or candidate.get('file_url')", "    local_path=candidate.get('file')\n    if getattr(self.config,'adapter','onebot')=='openqq' and action=='get_file' and isinstance(local_path,str):\n     local=Path(local_path)\n     if local.is_absolute() and local.is_file():return local\n    candidate_url=candidate.get('url') or candidate.get('file_url')")
+s=s.replace(" async def download(self,url,path):\n  limit=self.config.max_mb*1024*1024", " async def download(self,url,path):\n  limit=self.config.max_mb*1024*1024\n  if isinstance(url,Path):\n   if not 0<url.stat().st_size<=limit:raise ValueError('Local file empty or exceeds size limit')\n   await asyncio.to_thread(shutil.copyfile,url,path);return")
+s=s.replace(" p.add_argument('--file-cache'", " p.add_argument('--adapter',choices=['onebot','openqq'],default='onebot',help='Select OpenQQ local-file compatibility')\n p.add_argument('--file-cache'")
+p.write_text(s,encoding='utf-8')
+s=Path('test_qqbot_flow.py').read_text(encoding='utf-8-sig');s=s.replace("token='local-test-only',groups=[]","token='local-test-only',adapter='openqq',groups=[]");s=s.replace("if message['action']=='get_group_file_url':data={'url':f'http://127.0.0.1:{fp}/sample'}", "if message['action']=='get_file':\n      assert message['params']['file']=='[428] response_mkcn_test.bin'\n      data={'file':str(BIN.resolve()),'url':'','file_name':BIN.name,'file_size':BIN.stat().st_size}")
+s=s.replace("assert actions.count('get_group_file_url')==1","assert actions.count('get_file')==1\n    assert 'get_group_file_url' not in actions")
+Path('test_openqq_flow.py').write_text(s,encoding='utf-8')

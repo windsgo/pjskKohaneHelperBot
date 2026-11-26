@@ -1,0 +1,6 @@
+from pathlib import Path
+p=Path('qqbot_server.py');s=p.read_text(encoding='utf-8-sig')
+s=s.replace("  if not hmac.compare_digest(token,config.token):raise web.HTTPUnauthorized()", "  if config.token and not hmac.compare_digest(token,config.token):raise web.HTTPUnauthorized()")
+s=s.replace(" if not a.token:p.error('Set SEKAI_BOT_TOKEN or --token before starting')", " if not a.token and a.host not in ('127.0.0.1','::1','localhost'):\n  p.error('A token is required when listening beyond this computer')")
+p.write_text(s,encoding='utf-8')
+p=Path('QQBOT.md');s=p.read_text(encoding='utf-8-sig');s=s.replace("$env:SEKAI_BOT_TOKEN = '自行设置一段随机令牌'\npy qqbot_server.py",'py qqbot_server.py').replace("$env:SEKAI_BOT_TOKEN = '自行设置一段随机令牌'\n&",'&').replace('Access Token：填与 SEKAI_BOT_TOKEN 相同的值。','Access Token：本机默认模式留空。若设置了 SEKAI_BOT_TOKEN，则填相同的值。').replace('若客户端没有 Token 字段，可使用','启用令牌时，若客户端没有 Token 字段，可使用').replace('| --token | SEKAI_BOT_TOKEN环境变量 | 必填的连接令牌，也可用参数指定 |','| --token | SEKAI_BOT_TOKEN环境变量；未设置则为空 | 本机监听时可选；监听局域网地址时必填 |');s += '\n本机默认不需要令牌：URL 只在同一台电脑可连接。若QQBot运行在另一台机器，启动时传 `--host 0.0.0.0 --token 随机字符串`，在QQBot填同一Access Token，并把URL中的127.0.0.1改成本机局域网IP。随机字符串可自行生成，例如 PowerShell：`[guid]::NewGuid().ToString("N")`。\n';p.write_text(s,encoding='utf-8')

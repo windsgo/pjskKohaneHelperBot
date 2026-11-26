@@ -1,0 +1,42 @@
+{
+  "5": {
+    "name": "草地",
+    "image": "grassland",
+    "scale": 33.333,
+    "offset_x": 0,
+    "offset_y": -40,
+    "x_sign": -1,
+    "z_sign": -1,
+    "swap_axes": true
+  },
+  "6": {
+    "name": "沙滩",
+    "image": "beach",
+    "scale": 20.513,
+    "offset_x": 0,
+    "offset_y": 80,
+    "x_sign": 1,
+    "z_sign": -1,
+    "swap_axes": false
+  },
+  "7": {
+    "name": "花田",
+    "image": "flowergarden",
+    "scale": 24.806,
+    "offset_x": -62.015,
+    "offset_y": 20.672,
+    "x_sign": -1,
+    "z_sign": -1,
+    "swap_axes": true
+  },
+  "8": {
+    "name": "遗忘之地",
+    "image": "memorialplace",
+    "scale": 21.333,
+    "offset_x": 0,
+    "offset_y": -106.667,
+    "x_sign": 1,
+    "z_sign": -1,
+    "swap_axes": false
+  }
+}

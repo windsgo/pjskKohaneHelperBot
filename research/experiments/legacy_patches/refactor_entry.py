@@ -1,0 +1,2 @@
+from pathlib import Path
+p=Path('render_compact_report.py');s=p.read_text(encoding='utf-8-sig').replace('import json,csv,base64','import os,json,csv,base64').replace("O=B/'decoded'/'compact_report'","O=Path(os.environ.get('SEKAI_RENDER_OUT',str(B/'decoded'/'compact_report')))").replace("(B/'decoded/response.json').read_text", "Path(os.environ.get('SEKAI_RESPONSE',str(B/'decoded/response.json'))).read_text");p.write_text(s,encoding='utf-8')

@@ -1,0 +1,26 @@
+{
+  "visitors": {
+    "available": 56,
+    "total": 56
+  },
+  "mysekai_material": {
+    "available": 75,
+    "total": 75
+  },
+  "mysekai_item": {
+    "available": 5,
+    "total": 5
+  },
+  "mysekai_fixture": {
+    "available": 1151,
+    "total": 1172
+  },
+  "music": {
+    "available": 600,
+    "total": 663
+  },
+  "weather": {
+    "available": 14,
+    "total": 15
+  }
+}

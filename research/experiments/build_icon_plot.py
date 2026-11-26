@@ -1,0 +1,10 @@
+from pathlib import Path
+p=Path('plot_materials.py');s=p.read_text(encoding='utf-8-sig')
+s=s.replace("OUT=BASE/'decoded'/'maps'", "OUT=BASE/'decoded'/'icon_maps'")
+s=s.replace('SIZE=2400','SIZE=2400\nHEIGHT=2760\nICONS={int(p.stem):Image.open(p).convert("RGBA") for p in (BASE/"assets/materials").glob("*.png")}\nNAMES={r["material_id"]:r["name"] for r in DATA}\ndef paste_icon(im,mid,x,y,size=52):\n icon=ICONS[mid].copy();icon.thumbnail((size,size),Image.Resampling.LANCZOS)\n im.paste(icon,(int(x+(size-icon.width)/2),int(y+(size-icon.height)/2)),icon)')
+s=s.replace('(SIZE,SIZE)', '(SIZE,HEIGHT)').replace('标签为名称 × 数量','标签为材料图标 × 数量')
+s=s.replace("lines=[f'{name} × {count}' for (mid,name),count in sorted(materials.items())]\n  w=max(dr.textbbox((0,0),t,font=F)[2] for t in lines)+24;h=len(lines)*34+12", "lines=[(mid,count) for (mid,name),count in sorted(materials.items())]\n  w=min(2,len(lines))*120+16;h=math.ceil(len(lines)/2)*62+12")
+s=s.replace("for i,line in enumerate(lines): dr.text((box[0]+12,box[1]+4+34*i),line,font=F,fill='#1e293b')", "for i,(mid,count) in enumerate(lines):\n   ix=box[0]+8+(i%2)*120;iy=box[1]+6+(i//2)*62\n   paste_icon(im,mid,ix,iy)\n   dr.text((ix+54,iy+12),f'×{count}',font=font(28),fill='#1e293b')")
+s=s.replace("im.save(OUT/f'site_{site}.png')", "for i,mid in enumerate(sorted(NAMES)):\n  lx=65+(i%6)*390;ly=2410+(i//6)*78\n  paste_icon(im,mid,lx,ly,60)\n  dr.text((lx+68,ly+17),NAMES[mid],font=SMALL,fill='#334155')\n im.save(OUT/f'site_{site}.png')")
+s=s.replace('(SIZE*2,SIZE*2)','(SIZE*2,HEIGHT*2)').replace('(i//2)*SIZE','(i//2)*HEIGHT')
+Path('plot_material_icons.py').write_text(s,encoding='utf-8')
