@@ -145,7 +145,7 @@ def overview():
  for j,s in enumerate([5,6,7,8]):
   info=SITES[s];card_height=heights[j]
   dr.rounded_rectangle((34,y,1366,y+card_height),22,fill='#f9fbff',outline='#b8c6de',width=2)
-  bg=Image.open(B/'assets/maps'/f'{C[str(s)]["image"]}.png').convert('RGB');bg=bg.crop(map_crop_box(bg));bg.thumbnail((240,140),Image.Resampling.LANCZOS);mask=Image.new('L',bg.size,0);ImageDraw.Draw(mask).rounded_rectangle((0,0,bg.width-1,bg.height-1),12,fill=255);im.paste(bg,(57,y+38),mask)
+  bg=Image.open(B/'assets/maps'/f'{C[str(s)]["image"]}.png').convert('RGB');bg=bg.crop(map_crop_box(bg,s));bg.thumbnail((240,140),Image.Resampling.LANCZOS);mask=Image.new('L',bg.size,0);ImageDraw.Draw(mask).rounded_rectangle((0,0,bg.width-1,bg.height-1),12,fill=255);im.paste(bg,(57,y+38),mask)
   text(dr,(57,y+188),f'{len(info["groups"])} 个掉落点位',16)
   text(dr,(327,y+17),f'{NAMES[s]}  #{s}',25,bold=True)
   text(dr,(327,y+54),f'总量 {info["total"]} · 种类 {len(info["counts"])}',17,'#64748b')
@@ -153,18 +153,20 @@ def overview():
   y+=card_height+18
  text(dr,(48,total_height-58),'总览含全部掉落；地图省略心愿木材/石块。天气来自本次响应，非实时预报。',16,'#64748b')
  im.save(O/'overview.png')
-def map_crop_box(image):
+def map_crop_box(image,site=None):
  # Fixed 32:27 map crop (1280x1080 from the 1920x1080 source).
  width,height=image.size
  crop_width=min(width,round(height*32/27))
  crop_height=min(height,round(crop_width*27/32))
  left=max(0,(width-crop_width)//2)
+ # 忘却之所的左下角偶尔有掉落紧贴裁切边，整体向左留出 48 px。
+ if site is not None and int(site)==8:left=max(0,left-48)
  top=max(0,(height-crop_height)//2)
  return (left,top,left+crop_width,top+crop_height)
 
 def map_image(s):
  c=C[str(s)];source=Image.open(B/'assets/maps'/f'{c["image"]}.png').convert('RGB')
- box=map_crop_box(source);crop_left,crop_top=box[0],box[1]
+ box=map_crop_box(source,s);crop_left,crop_top=box[0],box[1]
  bg=source.crop(box);bw,bh=bg.size;ow,oh=source.size
  im=bg.copy();dr=ImageDraw.Draw(im)
  info=SITES[s]
@@ -179,11 +181,13 @@ def map_image(s):
  placements=[]
  for pos,items in records:
   px,py=xy(*pos)
-  if px < 80 or px > bw-80 or py < 55 or py > bh-30:continue
-  sizes=[item_size(k) for k,q in items];width=sum(z+5 for z in sizes)+6;height=48
-  # The point is always centered directly below its icons. Keep this anchor
-  # fixed so nearby drops preserve their actual relative positions.
-  box=(px-width/2,py-49,px+width/2,py-1)
+  if px < -20 or px > bw+20 or py < -20 or py > bh+20:continue
+  sizes=[item_size(k) for k,q in items];width=sum(z+5 for z in sizes)+6;height=max(48,max(sizes)+8)
+  # Clamp the icon stack inside the image so a drop near the crop edge does
+  # not lose its leftmost/rightmost icon. The anchor remains at the real point.
+  left=min(max(4,px-width/2),max(4,bw-width-4))
+  top=min(max(20,py-49),max(20,bh-height-4))
+  box=(left,top,left+width,top+height)
   placements.append((pos,items,sizes,box))
  for pos,items,sizes,box in placements:
   cx=box[0]+3
