@@ -115,7 +115,7 @@ NAMES={5:'初始空地',6:'心愿沙滩',7:'烂漫花田',8:'忘却之所'}
 def chip(im,dr,k,q,x,y,w=182,h=58):
  border,fill=style(k)
  if special(k):border,fill='#e04c56','#fff0ef'
- dr.rounded_rectangle((x,y,x+w,y+h),12,fill=fill,outline=border,width=2 if special(k) else 1)
+ dr.rounded_rectangle((x,y,x+w,y+h),12,fill=fill,outline=border,width=4 if special(k) else 1)
  icon(im,k,x+7,y+8,40);text(dr,(x+54,y+6),shorten(name(k),9),15)
  text(dr,(x+54,y+27),f'×{q}'+(' ★' if special(k) else ''),21,'#c43648' if special(k) else border,True)
 def overview():
