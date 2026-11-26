@@ -57,6 +57,10 @@ def name(k):
   music=next((m for m in musics if rec and m['id']==rec.get('externalId')),None)
   return '唱片·'+(music.get('infos',[{}])[0].get('title',music['title']) if music else str(k[1]))
  return TABLES.get(k[0],{}).get(k[1],{}).get('name',f'{k[0]} #{k[1]}')
+def item_size(k):
+ if k[0]=='mysekai_music_record':return 48
+ if k[0]=='mysekai_fixture' and '唱片' in name(k):return 40
+ return 36 if k[0]=='mysekai_material' else 24
 @lru_cache(maxsize=32)
 def f(n,bold=False):return ImageFont.truetype('C:/Windows/Fonts/msyh'+('bd' if bold else '')+'.ttc',n)
 def text(dr,xy,s,n=20,fill='#334155',bold=False):dr.text(xy,str(s),font=f(n,bold),fill=fill)
@@ -176,7 +180,7 @@ def map_image(s):
  for pos,items in records:
   px,py=xy(*pos)
   if px < 80 or px > bw-80 or py < 55 or py > bh-30:continue
-  sizes=[36 if k[0]=='mysekai_material' else 24 for k,q in items];width=sum(z+5 for z in sizes)+6;height=48
+  sizes=[item_size(k) for k,q in items];width=sum(z+5 for z in sizes)+6;height=48
   # The point is always centered directly below its icons. Keep this anchor
   # fixed so nearby drops preserve their actual relative positions.
   box=(px-width/2,py-49,px+width/2,py-1)
